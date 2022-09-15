@@ -1,6 +1,6 @@
 import React from "react";
 import base_icon from "../images/base_icon.jpg";
-import api from "../utils/Api";
+import api from "../utils/api";
 import Card from "./Card";
 
 function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
