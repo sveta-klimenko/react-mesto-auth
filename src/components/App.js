@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
@@ -6,13 +6,11 @@ import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 
 function App() {
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] =
-    React.useState(false);
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
-    React.useState(false);
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
-  const [isImagePopupOpen, setIsImagePopupOpen] = React.useState(false);
-  const [selectedCard, setSelectedCard] = React.useState({});
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
+  const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
+  const [selectedCard, setSelectedCard] = useState({});
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
@@ -36,10 +34,11 @@ function App() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsImagePopupOpen(false);
+    setSelectedCard({});
   }
 
   return (
-    <body className="page">
+    <div className="page">
       <Header />
       <Main
         onEditAvatar={handleEditAvatarClick}
@@ -61,8 +60,8 @@ function App() {
                 id="name"
                 name="name"
                 required
-                minlength="2"
-                maxlength="40"
+                minLength="2"
+                maxLength="40"
               />
               <span className="error" id="name-error"></span>
             </label>
@@ -73,8 +72,8 @@ function App() {
                 id="description"
                 name="about"
                 required
-                minlength="2"
-                maxlength="200"
+                minLength="2"
+                maxLength="200"
               />
               <span className="error" id="description-error"></span>
             </label>
@@ -97,8 +96,8 @@ function App() {
                 name="name"
                 placeholder="Название"
                 required
-                minlength="2"
-                maxlength="30"
+                minLength="2"
+                maxLength="30"
               />
               <span className="error" id="place-name-error"></span>
             </label>
@@ -145,7 +144,7 @@ function App() {
         isOpen={isImagePopupOpen}
         onClose={closeAllPopups}
       />
-    </body>
+    </div>
   );
 }
 

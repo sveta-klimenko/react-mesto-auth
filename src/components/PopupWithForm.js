@@ -9,7 +9,7 @@ function PopupWithForm({ name, title, submit, children, isOpen, onClose }) {
           onClick={onClose}
         ></button>
         <h2 className="popup__title">{title}</h2>
-        <form className={`form form_${name}`} novalidate>
+        <form className={`form form_${name}`} noValidate>
           <fieldset className="form__info">
             {children}
             <button className="form__save" type="submit">

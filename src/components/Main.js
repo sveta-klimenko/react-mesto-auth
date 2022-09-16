@@ -1,13 +1,13 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import base_icon from "../images/base_icon.jpg";
 import api from "../utils/api";
 import Card from "./Card";
 
 function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
-  const [userName, setUserName] = React.useState("Загрузка...");
-  const [userDescription, setUserDescription] = React.useState("Загрузка...");
-  const [userAvatar, setUserAvatar] = React.useState(base_icon);
-  const [cards, setCards] = React.useState([]);
+  const [userName, setUserName] = useState("Загрузка...");
+  const [userDescription, setUserDescription] = useState("Загрузка...");
+  const [userAvatar, setUserAvatar] = useState(base_icon);
+  const [cards, setCards] = useState([]);
 
   const getStartInfoApi = () => {
     Promise.all([api.getCards(), api.getPersonalInfo()])
@@ -22,7 +22,9 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
       .catch((err) => console.log(err));
   };
 
-  getStartInfoApi();
+  useEffect(() => {
+    getStartInfoApi();
+  }, []);
 
   return (
     <main className="content">
@@ -56,11 +58,9 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
 
       <section className="photos">
         <ul className="photo-grid">
-          {cards.map((item) => {
-            return (
-              <Card key={item._id} card={item} onCardClick={onCardClick} />
-            );
-          })}
+          {cards.map((item) => (
+            <Card key={item._id} card={item} onCardClick={onCardClick} />
+          ))}
         </ul>
       </section>
     </main>
