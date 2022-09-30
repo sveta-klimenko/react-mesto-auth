@@ -1,4 +1,16 @@
+import React, { useContext } from "react";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
+
 function Card({ card, onCardClick }) {
+  const currentUser = useContext(CurrentUserContext);
+  const isOwn = card.owner._id === currentUser._id;
+  const cardDeleteButtonClassName = `photo-grid__trash ${
+    !isOwn && "photo-grid__trash-hidden"
+  }`;
+  const isLiked = card.likes.some((i) => i._id === currentUser._id);
+  const cardLikeButtonClassName = `photo-grid__like ${
+    isLiked && "photo-grid__like_active"
+  }`;
   function handleClick() {
     onCardClick(card);
   }
@@ -12,14 +24,14 @@ function Card({ card, onCardClick }) {
         onClick={handleClick}
       />
       <button
-        className="photo-grid__trash"
+        className={cardDeleteButtonClassName}
         aria-label="Удалить изображение"
       ></button>
       <div className="photo-grid__info">
         <h2 className="photo-grid__title">{card.name}</h2>
         <div className="photo-grid__like-area">
           <button
-            className="photo-grid__like"
+            className={cardLikeButtonClassName}
             aria-label="Добавить изображение в избранные"
           ></button>
           <p className="photo-grid__like-number">{card.likes.length}</p>

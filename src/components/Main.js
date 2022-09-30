@@ -1,29 +1,19 @@
-import React, { useState, useEffect } from "react";
-import base_icon from "../images/base_icon.jpg";
-import api from "../utils/api";
+import React, { useContext, useState, useEffect } from "react";
 import Card from "./Card";
+import api from "../utils/api";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
-  const [userName, setUserName] = useState("Загрузка...");
-  const [userDescription, setUserDescription] = useState("Загрузка...");
-  const [userAvatar, setUserAvatar] = useState(base_icon);
+  const currentUser = useContext(CurrentUserContext);
   const [cards, setCards] = useState([]);
 
-  const getStartInfoApi = () => {
-    Promise.all([api.getCards(), api.getPersonalInfo()])
-      .then((res) => {
-        const [cardData, PersonalInfoData] = res;
-        //myId = PersonalInfoData._id;
-        setUserName(PersonalInfoData.name);
-        setUserDescription(PersonalInfoData.about);
-        setUserAvatar(PersonalInfoData.avatar);
+  useEffect(() => {
+    api
+      .getCards()
+      .then((cardData) => {
         setCards(cardData);
       })
       .catch((err) => console.log(err));
-  };
-
-  useEffect(() => {
-    getStartInfoApi();
   }, []);
 
   return (
@@ -35,13 +25,13 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
             onClick={onEditAvatar}
           ></button>
           <img
-            src={userAvatar}
+            src={currentUser.avatar}
             className="profile__avatar"
             alt="Аватар пользователя"
           />
           <div className="profile__id">
-            <h1 className="profile__name">{userName}</h1>
-            <p className="profile__occupation">{userDescription}</p>
+            <h1 className="profile__name">{currentUser.name}</h1>
+            <p className="profile__occupation">{currentUser.about}</p>
           </div>
           <button
             className="profile__change-info"
