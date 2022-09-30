@@ -4,6 +4,7 @@ import Main from "./Main";
 import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
+import EditProfilePopup from "./EditProfilePopup";
 import {
   defaultCurrentUser,
   CurrentUserContext,
@@ -50,6 +51,13 @@ function App() {
     setSelectedCard({});
   }
 
+  function handleUpdateUser(data) {
+    api
+      .updatePersonalInfo(data)
+      .then((userInfo) => setCurrentUser(userInfo))
+      .catch((err) => console.log(err));
+  }
+
   return (
     <div className="page">
       <CurrentUserContext.Provider value={currentUser || defaultCurrentUser}>
@@ -61,40 +69,10 @@ function App() {
           onCardClick={handleCardClick}
         />
         <Footer />
-        <PopupWithForm
-          name="personal-info"
-          title="Редактировать профиль"
-          submit="Сохранить"
-          children={
-            <>
-              <label className="error-label">
-                <input
-                  type="text"
-                  className="info info_name"
-                  id="name"
-                  name="name"
-                  required
-                  minLength="2"
-                  maxLength="40"
-                />
-                <span className="error" id="name-error"></span>
-              </label>
-              <label className="error-label">
-                <input
-                  type="text"
-                  className="info info_description"
-                  id="description"
-                  name="about"
-                  required
-                  minLength="2"
-                  maxLength="200"
-                />
-                <span className="error" id="description-error"></span>
-              </label>
-            </>
-          }
+        <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
+          onUpdateUser={handleUpdateUser}
         />
         <PopupWithForm
           name="add-picture"
