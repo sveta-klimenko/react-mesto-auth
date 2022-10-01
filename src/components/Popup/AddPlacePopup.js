@@ -1,11 +1,24 @@
 import PopupWithForm from "./PopupWithForm";
+import React, { useRef } from "react";
 
-function AddPlacePopup({ isOpen, onClose }) {
+function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
+  const nameRef = useRef();
+  const linkRef = useRef();
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    onAddPlace({
+      link: linkRef.current.value,
+      name: nameRef.current.value,
+    });
+    onClose();
+  }
   return (
     <PopupWithForm
       name="add-picture"
       title="Новое место"
       submit="Сохранить"
+      onSubmit={handleSubmit}
       children={
         <>
           <label className="error-label">
@@ -18,6 +31,7 @@ function AddPlacePopup({ isOpen, onClose }) {
               required
               minLength="2"
               maxLength="30"
+              ref={nameRef}
             />
             <span className="error" id="place-name-error"></span>
           </label>
@@ -29,6 +43,7 @@ function AddPlacePopup({ isOpen, onClose }) {
               name="link"
               placeholder="Ссылка на картинку"
               required
+              ref={linkRef}
             />
             <span className="error" id="place-link-error"></span>
           </label>
