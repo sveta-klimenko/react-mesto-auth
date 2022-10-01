@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
-import PopupWithForm from "./PopupWithForm";
-import ImagePopup from "./ImagePopup";
-import EditProfilePopup from "./EditProfilePopup";
+import PopupWithForm from "./Popup/PopupWithForm";
+import ImagePopup from "./Popup/ImagePopup";
+import EditProfilePopup from "./Popup/EditProfilePopup";
+import EditAvatarPopup from "./Popup/EditAvatarPopup";
+import AddPlacePopup from "./Popup/AddPlacePopup";
 import {
   defaultCurrentUser,
   CurrentUserContext,
@@ -58,6 +60,13 @@ function App() {
       .catch((err) => console.log(err));
   }
 
+  function handleUpdateAvatar(data) {
+    api
+      .updateAvatar(data)
+      .then((userInfo) => setCurrentUser(userInfo))
+      .catch((err) => console.log(err));
+  }
+
   return (
     <div className="page">
       <CurrentUserContext.Provider value={currentUser || defaultCurrentUser}>
@@ -74,62 +83,12 @@ function App() {
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}
         />
-        <PopupWithForm
-          name="add-picture"
-          title="Новое место"
-          submit="Сохранить"
-          children={
-            <>
-              <label className="error-label">
-                <input
-                  type="text"
-                  className="info info_place-name"
-                  id="place-name"
-                  name="name"
-                  placeholder="Название"
-                  required
-                  minLength="2"
-                  maxLength="30"
-                />
-                <span className="error" id="place-name-error"></span>
-              </label>
-              <label className="error-label">
-                <input
-                  type="url"
-                  className="info info_place-link"
-                  id="place-link"
-                  name="link"
-                  placeholder="Ссылка на картинку"
-                  required
-                />
-                <span className="error" id="place-link-error"></span>
-              </label>
-            </>
-          }
-          isOpen={isAddPlacePopupOpen}
-          onClose={closeAllPopups}
-        />
-        <PopupWithForm
-          name="change-icon"
-          title="Закрыть попап"
-          submit="Сохранить"
-          children={
-            <label className="error-label">
-              <input
-                type="url"
-                className="info info_icon"
-                id="avatar"
-                name="avatar"
-                placeholder="Ссылка на аватар"
-                required
-              />
-              <span className="error" id="avatar-error"></span>
-            </label>
-          }
+        <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} />
+        <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
+          onUpdateAvatar={handleUpdateAvatar}
         />
-
         <ImagePopup
           link={selectedCard.link}
           title={selectedCard.name}
