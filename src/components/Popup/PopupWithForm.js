@@ -17,7 +17,7 @@ function PopupWithForm({
           onClick={onClose}
         ></button>
         <h2 className="popup__title">{title}</h2>
-        <form className={`form form_${name}`} onSubmit={onSubmit} noValidate>
+        <form className={`form form_${name}`} onSubmit={onSubmit}>
           <fieldset className="form__info">
             {children}
             <button className="form__save" type="submit">
