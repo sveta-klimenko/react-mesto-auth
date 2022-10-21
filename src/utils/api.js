@@ -11,54 +11,58 @@ class Api {
     return Promise.reject(`Ошибка: ${res.status}`);
   }
 
+  _request(url, options) {
+    return fetch(url, options).then(this.handleResponse);
+  }
+
   getCards() {
-    return fetch(this.url + "cards", {
+    return this._request(this.url + "cards", {
       headers: this.headers,
-    }).then(this.handleResponse);
+    });
   }
 
   createCard(data) {
-    return fetch(this.url + "cards", {
+    return this._request(this.url + "cards", {
       method: "POST",
       headers: this.headers,
       body: JSON.stringify(data),
-    }).then(this.handleResponse);
+    });
   }
 
   deleteCard(id) {
-    return fetch(this.url + "cards/" + id, {
+    return this._request(this.url + "cards/" + id, {
       method: "DELETE",
       headers: this.headers,
-    }).then(this.handleResponse);
+    });
   }
 
   getPersonalInfo() {
-    return fetch(this.url + "users/me", {
+    return this._request(this.url + "users/me", {
       headers: this.headers,
-    }).then(this.handleResponse);
+    });
   }
 
   updatePersonalInfo(data) {
-    return fetch(this.url + "users/me", {
+    return this._request(this.url + "users/me", {
       method: "PATCH",
       headers: this.headers,
       body: JSON.stringify(data),
-    }).then(this.handleResponse);
+    });
   }
 
   updateAvatar(data) {
-    return fetch(this.url + "users/me/avatar ", {
+    return this._request(this.url + "users/me/avatar ", {
       method: "PATCH",
       headers: this.headers,
       body: JSON.stringify(data),
-    }).then(this.handleResponse);
+    });
   }
 
   changeLikeCardStatus(id, isLiked) {
-    return fetch(this.url + "cards/" + id + "/likes", {
+    return this._request(this.url + "cards/" + id + "/likes", {
       method: `${isLiked ? "PUT" : "DELETE"}`,
       headers: this.headers,
-    }).then(this.handleResponse);
+    });
   }
 }
 

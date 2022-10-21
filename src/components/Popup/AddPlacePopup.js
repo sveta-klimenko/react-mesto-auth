@@ -16,7 +16,6 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
       link: linkRef.current.value,
       name: nameRef.current.value,
     });
-    onClose();
   }
   return (
     <PopupWithForm
