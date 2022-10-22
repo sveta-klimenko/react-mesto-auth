@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 function Auth({ onSubmit, submit, title, redirectLink = "" }) {
   const emailRef = useRef();
@@ -38,9 +39,9 @@ function Auth({ onSubmit, submit, title, redirectLink = "" }) {
         </fieldset>
       </form>
       {redirectLink && (
-        <a href={redirectLink} className="auth__redirect">
+        <Link to={redirectLink} className="auth__redirect">
           Уже зарегистрированы? Войти
-        </a>
+        </Link>
       )}
     </main>
   );

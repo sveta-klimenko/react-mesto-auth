@@ -221,34 +221,18 @@ function App() {
           <Route
             path="/sign-up"
             element={
-              <>
-                <Register
-                  onSubmit={handleRegistration}
-                  submit="Зарегестрироваться"
-                  title="Регистрация"
-                  redirectLink="/sign-in"
-                />
-                <InfoTooltip
-                  name="infoTooltip"
-                  isOpen={isInfoTooltipOpen}
-                  onClose={closeAllPopups}
-                  isRegSuccess={isRegSuccess}
-                />
-              </>
+              <Register
+                onSubmit={handleRegistration}
+                submit="Зарегестрироваться"
+                title="Регистрация"
+                redirectLink="/sign-in"
+              />
             }
           />
           <Route
             path="/sign-in"
             element={
-              <>
-                <Login onSubmit={handleLogin} submit="Войти" title="Вход" />
-                <InfoTooltip
-                  name="infoTooltip"
-                  isOpen={isInfoTooltipOpen}
-                  onClose={closeAllPopups}
-                  isRegSuccess={isRegSuccess}
-                />
-              </>
+              <Login onSubmit={handleLogin} submit="Войти" title="Вход" />
             }
           />
           <Route
@@ -292,6 +276,12 @@ function App() {
           ></Route>
         </Routes>
         <Footer />
+        <InfoTooltip
+          name="infoTooltip"
+          isOpen={isInfoTooltipOpen}
+          onClose={closeAllPopups}
+          isRegSuccess={isRegSuccess}
+        />
       </CurrentUserContext.Provider>
     </div>
   );
